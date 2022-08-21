@@ -35,6 +35,7 @@ class S3SnsSqsLambdaStack(Stack):
         upload_queue = sqs.Queue(
             self,
             id="sample_queue_id",
+            retention_period=Duration.seconds(5000),
             visibility_timeout=Duration.seconds(30),
             dead_letter_queue=dead_letter_queue
         )
@@ -105,5 +106,3 @@ class S3SnsSqsLambdaStack(Stack):
         # bind lambda to the sqs queue (trigger lambda)
         invoke_event_source = lambda_event.SqsEventSource(upload_queue)
         function.add_event_source(invoke_event_source)
-
-        
